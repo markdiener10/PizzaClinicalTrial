@@ -31,7 +31,7 @@ func (g *House) HitTest(long int, lat int) bool {
 func (g *House) DeliverPizza() error {
 	g.deliveries++
 	if g.deliveries > 200 {
-		return errors.New("Obesity Warning - clinical trial exceeding consumption threshold")
+		return errors.New("Obesity Warning - clinical trial exceeding healthy number of pizzas")
 	}
 	return nil
 }

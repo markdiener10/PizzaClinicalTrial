@@ -126,6 +126,10 @@ func TestPart1(t *testing.T) {
 		house.DeliverPizza()
 	}
 
+	if len(dispatchCommands) != 8192 {
+		t.Errorf("Known dispatch command Set Not matching original known version:%d", len(dispatchCommands))
+	}
+
 	if deliveries.NumHouses() != 4498 {
 		t.Errorf("Known dispatch command Set Not Correctly Executing :%d", deliveries.NumHouses())
 	}
@@ -170,6 +174,10 @@ func TestPart2(t *testing.T) {
 			house = deliveries.AddHouse(current.Longitude, current.Latitude)
 		}
 		house.DeliverPizza()
+	}
+
+	if len(dispatchCommands) != 8192 {
+		t.Errorf("Known dispatch command Set Not matching original known version:%d", len(dispatchCommands))
 	}
 
 	if deliveries.NumHouses() != 4438 {

@@ -110,12 +110,14 @@ func TestPart1(t *testing.T) {
 		switch dispatchCommands[idx] {
 		case '^':
 			person.GoNorth()
-		case 'V':
+		case 'v':
 			person.GoSouth()
 		case '>':
 			person.GoEast()
 		case '<':
 			person.GoWest()
+		default:
+			continue
 		}
 
 		house = deliveries.FindHouse(person.Longitude, person.Latitude)
@@ -123,14 +125,17 @@ func TestPart1(t *testing.T) {
 			house = deliveries.AddHouse(person.Longitude, person.Latitude)
 		}
 
-		house.DeliverPizza()
+		err := house.DeliverPizza()
+		if err != nil {
+			t.Logf("A delivery error was observed:%s", err.Error())
+		}
 	}
 
 	if len(dispatchCommands) != 8192 {
 		t.Errorf("Known dispatch command Set Not matching original known version:%d", len(dispatchCommands))
 	}
 
-	if deliveries.NumHouses() != 4498 {
+	if deliveries.NumHouses() != 2565 {
 		t.Errorf("Known dispatch command Set Not Correctly Executing :%d", deliveries.NumHouses())
 	}
 
@@ -150,6 +155,13 @@ func TestPart2(t *testing.T) {
 
 	for idx := 0; idx < len(dispatchCommands); idx++ {
 
+		switch dispatchCommands[idx] {
+		case '^', 'v', '>', '<':
+			break
+		default:
+			continue
+		}
+
 		if goatNow {
 			current = goat
 		} else {
@@ -161,7 +173,7 @@ func TestPart2(t *testing.T) {
 		switch dispatchCommands[idx] {
 		case '^':
 			current.GoNorth()
-		case 'V':
+		case 'v':
 			current.GoSouth()
 		case '>':
 			current.GoEast()
@@ -173,14 +185,18 @@ func TestPart2(t *testing.T) {
 		if house == nil {
 			house = deliveries.AddHouse(current.Longitude, current.Latitude)
 		}
-		house.DeliverPizza()
+		err := house.DeliverPizza()
+		if err != nil {
+			t.Logf("A delivery error was observed:%s", err.Error())
+		}
+
 	}
 
 	if len(dispatchCommands) != 8192 {
 		t.Errorf("Known dispatch command Set Not matching original known version:%d", len(dispatchCommands))
 	}
 
-	if deliveries.NumHouses() != 4438 {
+	if deliveries.NumHouses() != 2639 {
 		t.Errorf("Known dispatch command Set Not Correctly Executing :%d", deliveries.NumHouses())
 	}
 
